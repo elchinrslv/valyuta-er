@@ -1,7 +1,7 @@
-const apiKey = '95640758702a8dbcee79e935';
+const apiKey = '61fef6cd54c94b993b05b36c';
 
-let baseCurrency = 'AZN';
-
+let baseCurrency = 'GBP';
+let stoprepeat = 'GBP';
 let lefts = document.querySelectorAll(".currency-option-left");
 let rights = document.querySelectorAll(".currency-option-right");
 let fromInput = document.querySelector("#from-input");
@@ -51,6 +51,11 @@ document.querySelectorAll('.second-part .currency-option-right').forEach((option
 
 lefts.forEach(item => item.addEventListener("click", function () {
     let activeCurrencyRight = document.querySelector(".currency-right>.bg-purple");
+         if(stoprepeat === item.innerHTML){
+
+         }
+else{
+
 
     fetch(`https://v6.exchangerate-api.com/v6/${apiKey}/latest/${this.innerHTML}`)
         .then(response => {
@@ -62,23 +67,29 @@ lefts.forEach(item => item.addEventListener("click", function () {
         .then(data => data["conversion_rates"])
         .then(data => {
             console.log(data[activeCurrencyRight.innerHTML]);
-            toInput.value = (data[activeCurrencyRight.innerHTML] * fromInput.value).toFixed(4);
+            fromInput.value = (data[activeCurrencyRight.innerHTML] * toInput.value).toFixed(4);
             document.querySelector("#from-rate").innerHTML = data[activeCurrencyRight.innerHTML].toFixed(4);
             document.querySelector("#to-rate").innerHTML = (1 / data[activeCurrencyRight.innerHTML]).toFixed(4);
         })
         .catch(error => {
             errorMessage.style.display = 'block';
         });
-
+    }
+    stoprepeat = item.innerHTML;
     document.querySelector("#from-currency").innerHTML = this.innerHTML;
     document.querySelector("#from-target").innerHTML = activeCurrencyRight.innerHTML;
     document.querySelector("#to-currency").innerHTML = activeCurrencyRight.innerHTML;
     document.querySelector("#to-target").innerHTML = this.innerHTML;
+    
 }));
 
 rights.forEach(item => item.addEventListener("click", function () {
     let activeCurrencyLeft = document.querySelector(".currency-left>.bg-purple");
+  
+    if(stoprepeat === item.innerHTML){
 
+    }
+    else{
     fetch(`https://v6.exchangerate-api.com/v6/${apiKey}/latest/${this.innerHTML}`)
         .then(response => {
             if (!response.ok) {
@@ -89,14 +100,15 @@ rights.forEach(item => item.addEventListener("click", function () {
         .then(data => data["conversion_rates"])
         .then(data => {
             console.log(data[activeCurrencyLeft.innerHTML]);
-            fromInput.value = (data[activeCurrencyLeft.innerHTML] * toInput.value).toFixed(4);
+            toInput.value = (data[activeCurrencyLeft.innerHTML] * fromInput.value).toFixed(4);
             document.querySelector("#to-rate").innerHTML = data[activeCurrencyLeft.innerHTML].toFixed(4);
             document.querySelector("#from-rate").innerHTML = (1 / data[activeCurrencyLeft.innerHTML]).toFixed(4);
         })
         .catch(error => {
             errorMessage.style.display = 'block';
         });
-
+    }
+    stoprepeat = item.innerHTML;
     document.querySelector("#to-currency").innerHTML = this.innerHTML;
     document.querySelector("#to-target").innerHTML = activeCurrencyLeft.innerHTML;
     document.querySelector("#from-currency").innerHTML = activeCurrencyLeft.innerHTML;

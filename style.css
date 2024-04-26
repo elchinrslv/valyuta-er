@@ -29,11 +29,16 @@ li a{
     font-weight: 600;
     color: #959BA4;
 }
-li:first-child a{
+li:nth-child(n) a:hover{
     color:black;
+    transition: 0.4s;
 }
 ul{
     width: 70%;
+}
+.marquee{
+   font-weight: bold;
+   font-size: 30px;
 }
 .login-btn {
     padding: 8px 10px;
@@ -46,6 +51,11 @@ ul{
     font-size: 12px;
     font-weight: 600;
     cursor: pointer;
+}
+.login-btn:hover{
+    animation: alternate;
+    transition: 0.4s;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 h1{
     font-size: 38px;
